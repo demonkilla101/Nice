@@ -1,0 +1,43 @@
+-- Seed Spawner Script
+-- Works with Roblox executors (e.g., Synapse X)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+-- Configuration
+local SEED_NAME = "GardenSeed"
+local SEED_COLOR = Color3.fromRGB(34, 139, 34) -- Forest green
+local SEED_SIZE = Vector3.new(1, 1, 1)
+local SPAWN_INTERVAL = 2 -- seconds
+local SPAWN_DISTANCE = 5 -- in front of player
+
+-- Function to create a seed
+local function spawnSeed()
+    local seed = Instance.new("Part")
+    seed.Name = SEED_NAME
+    seed.Size = SEED_SIZE
+    seed.Color = SEED_COLOR
+    seed.Anchored = false
+    seed.CanCollide = true
+    seed.Shape = Enum.PartType.Ball
+    seed.Material = Enum.Material.Grass
+
+    local hrp = Character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        seed.CFrame = hrp.CFrame * CFrame.new(0, -3, -SPAWN_DISTANCE)
+    else
+        seed.Position = Vector3.new(0, 10, 0)
+    end
+
+    seed.Parent = workspace
+end
+
+-- Auto spawner
+task.spawn(function()
+    while true do
+        spawnSeed()
+        task.wait(SPAWN_INTERVAL)
+    end
+end)
